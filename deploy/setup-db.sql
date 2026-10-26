@@ -12,8 +12,13 @@ CREATE DATABASE IF NOT EXISTS marketplace
 CREATE USER IF NOT EXISTS 'marketplace'@'localhost'
   IDENTIFIED BY 'TroqueEstaSenhaForte!123';
 
--- Privilégios restritos APENAS ao banco da aplicação (menor privilégio).
-GRANT SELECT, INSERT, UPDATE, DELETE ON marketplace.* TO 'marketplace'@'localhost';
+-- Privilégios restritos APENAS ao banco "marketplace" (menor privilégio:
+-- o usuário não enxerga nem toca em nenhum outro banco do servidor).
+-- Inclui DDL (CREATE/DROP/ALTER) porque os scripts npm run db:init / db:seed
+-- criam e recriam as tabelas com este usuário.
+-- Obs.: em produção real, o ideal é separar um usuário "migrador" (com DDL)
+-- do usuário de runtime (só SELECT/INSERT/UPDATE/DELETE).
+GRANT ALL PRIVILEGES ON marketplace.* TO 'marketplace'@'localhost';
 
 -- Usuário SOMENTE-LEITURA para abrir no Workbench durante a avaliação
 -- (mostra os dados sem risco de alteração acidental).
