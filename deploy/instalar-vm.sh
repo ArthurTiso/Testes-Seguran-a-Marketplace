@@ -10,7 +10,8 @@ APP_DIR="/opt/marketplace"
 
 echo "==> 1. Instalando pacotes (Node.js, MariaDB, nginx)..."
 sudo apt-get update -qq
-sudo apt-get install -y -qq ca-certificates curl gnupg nginx mariadb-server openssl
+sudo apt-get install -y -qq ca-certificates curl gnupg nginx mariadb-server openssl \
+  build-essential python3
 # Node.js 20 LTS (via NodeSource) se o node não existir
 if ! command -v node >/dev/null; then
   curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
