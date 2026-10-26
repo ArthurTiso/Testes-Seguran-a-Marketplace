@@ -1,0 +1,38 @@
+<%- include('partials/header', { titulo: 'Admin' }) %>
+<h2>Painel administrativo</h2>
+
+<div class="card">
+  <h3>Usuários (<%= usuarios.length %>)</h3>
+  <table>
+    <tr><th>ID</th><th>Nome</th><th>E-mail</th><th>CPF</th><th>Papel</th><th>Tent.</th><th>Bloqueado até</th></tr>
+    <% usuarios.forEach(u => { %>
+      <tr>
+        <td><%= u.id %></td>
+        <td><%- escapeHtml(u.nome) %></td>
+        <td><%- escapeHtml(u.email) %></td>
+        <td><%= u.cpf %></td>
+        <td><%= u.papel %></td>
+        <td><%= u.tentativas_login %></td>
+        <td><%= u.bloqueado_ate ? new Date(u.bloqueado_ate).toLocaleString('pt-BR') : '—' %></td>
+      </tr>
+    <% }) %>
+  </table>
+  <p class="small">CPF exibido mascarado mesmo para o admin (princípio do menor privilégio).</p>
+</div>
+
+<div class="card">
+  <h3>Logs de auditoria (últimos 50)</h3>
+  <table>
+    <tr><th>Data</th><th>Usuário</th><th>Ação</th><th>Detalhe</th><th>IP</th></tr>
+    <% logs.forEach(l => { %>
+      <tr>
+        <td><%= new Date(l.criado_em).toLocaleString('pt-BR') %></td>
+        <td><%= l.usuario_id || '—' %></td>
+        <td><%= l.acao %></td>
+        <td><%- escapeHtml(l.detalhe || '') %></td>
+        <td><%= l.ip %></td>
+      </tr>
+    <% }) %>
+  </table>
+</div>
+<%- include('partials/footer') %>

@@ -1,0 +1,31 @@
+<%- include('partials/header', { titulo: 'Produtos' }) %>
+<h2>Produtos</h2>
+<form action="/" method="get" style="display:flex;gap:.5rem;max-width:480px;margin-bottom:1rem">
+  <input name="q" placeholder="Buscar produto..." value="<%= busca %>">
+  <button type="submit">Buscar</button>
+</form>
+
+<% if (typeof debugSql !== 'undefined' && debugSql) { %>
+  <div class="mono">SQL executado (modo vulnerável): <%= debugSql %></div>
+<% } %>
+
+<% if (!produtos.length) { %>
+  <p>Nenhum produto encontrado.</p>
+<% } else { %>
+  <div class="grid">
+    <% produtos.forEach(p => { %>
+      <div class="card produto">
+        <h3 style="margin:.2rem 0"><a href="/produto/<%= p.id %>"><%- escapeHtml(p.nome) %></a></h3>
+        <p class="small"><%- escapeHtml(p.descricao || '') %></p>
+        <p class="preco">R$ <%= Number(p.preco).toFixed(2) %></p>
+        <p class="small">Vendedor: <%- escapeHtml(p.vendedor || '—') %> · Estoque: <%= p.estoque %></p>
+        <form action="/carrinho/adicionar" method="post">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <input type="hidden" name="produtoId" value="<%= p.id %>">
+          <button type="submit">Adicionar ao carrinho</button>
+        </form>
+      </div>
+    <% }) %>
+  </div>
+<% } %>
+<%- include('partials/footer') %>

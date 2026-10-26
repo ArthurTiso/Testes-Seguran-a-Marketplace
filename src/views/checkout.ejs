@@ -1,0 +1,54 @@
+<%- include('partials/header', { titulo: 'Checkout' }) %>
+<h2>Finalizar compra</h2>
+<% if (erro) { %><div class="alerta alerta-erro"><%= erro %></div><% } %>
+
+<div class="card">
+  <h3>1. Endereço de entrega</h3>
+  <% if (!enderecos.length) { %>
+    <p class="small">Você ainda não tem endereços. Cadastre um abaixo.</p>
+  <% } %>
+  <form action="/checkout" method="post">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <% if (enderecos.length) { %>
+      <label>Escolha o endereço</label>
+      <select name="enderecoId" required>
+        <% enderecos.forEach(e => { %>
+          <option value="<%= e.id %>"><%- escapeHtml(e.logradouro) %>, <%- escapeHtml(e.numero) %> - <%- escapeHtml(e.cidade) %>/<%- escapeHtml(e.uf) %> (CEP <%- escapeHtml(e.cep) %>)</option>
+        <% }) %>
+      </select>
+
+      <h3 style="margin-top:1.2rem">2. Pagamento (cartão de crédito)</h3>
+      <p class="small">Dados fictícios. O número do cartão é cifrado; o CVV não é armazenado.</p>
+      <label>Nome no cartão</label>
+      <input name="cartaoTitular" required>
+      <label>Número do cartão</label>
+      <input name="cartaoNumero" placeholder="4111 1111 1111 1111" required>
+      <div style="display:flex;gap:1rem">
+        <div style="flex:1"><label>Validade</label><input name="cartaoValidade" placeholder="12/2030" required></div>
+        <div style="flex:1"><label>CVV</label><input name="cvv" placeholder="123" required></div>
+      </div>
+      <div style="margin-top:1rem"><button type="submit">Pagar e finalizar</button></div>
+    <% } %>
+  </form>
+</div>
+
+<div class="card">
+  <h3>Cadastrar novo endereço</h3>
+  <form action="/enderecos" method="post">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <label>Destinatário</label><input name="destinatario" required>
+    <div style="display:flex;gap:1rem">
+      <div style="flex:1"><label>CEP</label><input name="cep" required></div>
+      <div style="flex:2"><label>Logradouro</label><input name="logradouro" required></div>
+      <div style="width:90px"><label>Número</label><input name="numero" required></div>
+    </div>
+    <label>Complemento</label><input name="complemento">
+    <div style="display:flex;gap:1rem">
+      <div style="flex:1"><label>Bairro</label><input name="bairro" required></div>
+      <div style="flex:1"><label>Cidade</label><input name="cidade" required></div>
+      <div style="width:70px"><label>UF</label><input name="uf" maxlength="2" required></div>
+    </div>
+    <div style="margin-top:1rem"><button class="btn-sec" type="submit">Salvar endereço</button></div>
+  </form>
+</div>
+<%- include('partials/footer') %>

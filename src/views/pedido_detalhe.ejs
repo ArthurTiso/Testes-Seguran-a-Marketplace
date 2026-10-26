@@ -1,0 +1,46 @@
+<%- include('partials/header', { titulo: 'Pedido #' + pedido.id }) %>
+<h2>Pedido #<%= pedido.id %> <span class="badge badge-pago"><%= pedido.status %></span></h2>
+<p class="small">Realizado em <%= new Date(pedido.criado_em).toLocaleString('pt-BR') %></p>
+
+<div class="card">
+  <h3>Itens</h3>
+  <table>
+    <tr><th>Produto</th><th>Qtd</th><th class="right">Unitário</th><th class="right">Subtotal</th></tr>
+    <% itens.forEach(i => { %>
+      <tr>
+        <td><%- escapeHtml(i.nome) %></td>
+        <td><%= i.quantidade %></td>
+        <td class="right">R$ <%= Number(i.preco_unitario).toFixed(2) %></td>
+        <td class="right">R$ <%= (Number(i.preco_unitario)*i.quantidade).toFixed(2) %></td>
+      </tr>
+    <% }) %>
+    <tr><th colspan="3">Total</th><th class="right">R$ <%= Number(pedido.total).toFixed(2) %></th></tr>
+  </table>
+</div>
+
+<div class="card">
+  <h3>Entrega</h3>
+  <% if (endereco) { %>
+    <p><%- escapeHtml(endereco.destinatario) %><br>
+    <%- escapeHtml(endereco.logradouro) %>, <%- escapeHtml(endereco.numero) %>
+    <%- endereco.complemento ? '- ' + escapeHtml(endereco.complemento) : '' %><br>
+    <%- escapeHtml(endereco.bairro) %> — <%- escapeHtml(endereco.cidade) %>/<%- escapeHtml(endereco.uf) %> · CEP <%- escapeHtml(endereco.cep) %></p>
+  <% } %>
+  <% if (entrega) { %>
+    <p class="small">Transportadora: <%- escapeHtml(entrega.transportadora || '—') %> ·
+    Rastreio: <strong><%- escapeHtml(entrega.codigo_rastreio || '—') %></strong> ·
+    Status: <%= entrega.status %>
+    <% if (entrega.previsao) { %>· Previsão: <%= new Date(entrega.previsao).toLocaleDateString('pt-BR') %><% } %></p>
+  <% } %>
+</div>
+
+<div class="card">
+  <h3>Pagamento</h3>
+  <% if (pagamento) { %>
+    <p>Cartão <%- escapeHtml(pagamento.bandeira || '') %> final <strong><%= pagamento.ultimos4 %></strong> ·
+    Titular: <%- escapeHtml(pagamento.titular) %> · <%= pagamento.status %></p>
+    <p class="small">O número completo do cartão está cifrado no banco (AES-256-GCM). O CVV não é armazenado.</p>
+  <% } %>
+</div>
+<p><a href="/pedidos">← Voltar aos pedidos</a></p>
+<%- include('partials/footer') %>

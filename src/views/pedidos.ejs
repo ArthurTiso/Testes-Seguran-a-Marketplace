@@ -1,0 +1,22 @@
+<%- include('partials/header', { titulo: 'Meus pedidos' }) %>
+<h2>Meus pedidos</h2>
+<% if (!pedidos.length) { %>
+  <p>Você ainda não fez pedidos. <a href="/">Ver produtos</a></p>
+<% } else { %>
+  <div class="card">
+    <table>
+      <tr><th>#</th><th>Data</th><th>Status</th><th>Entrega</th><th class="right">Total</th><th></th></tr>
+      <% pedidos.forEach(p => { %>
+        <tr>
+          <td><%= p.id %></td>
+          <td><%= new Date(p.criado_em).toLocaleString('pt-BR') %></td>
+          <td><span class="badge badge-pago"><%= p.status %></span></td>
+          <td><%= p.entrega_status || '—' %></td>
+          <td class="right">R$ <%= Number(p.total).toFixed(2) %></td>
+          <td><a href="/pedidos/<%= p.id %>">Ver</a></td>
+        </tr>
+      <% }) %>
+    </table>
+  </div>
+<% } %>
+<%- include('partials/footer') %>

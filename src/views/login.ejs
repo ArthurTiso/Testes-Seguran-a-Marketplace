@@ -1,0 +1,16 @@
+<%- include('partials/header', { titulo: 'Entrar' }) %>
+<div class="card" style="max-width:420px;margin:2rem auto">
+  <h2>Entrar</h2>
+  <% if (erro) { %><div class="alerta alerta-erro"><%= erro %></div><% } %>
+  <form action="/login" method="post">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <input type="hidden" name="next" value="<%= next %>">
+    <label>E-mail</label>
+    <input type="email" name="email" required autofocus>
+    <label>Senha</label>
+    <input type="password" name="senha" required>
+    <div style="margin-top:1rem"><button type="submit">Entrar</button></div>
+  </form>
+  <p class="small" style="margin-top:1rem">Não tem conta? <a href="/cadastro">Cadastre-se</a></p>
+</div>
+<%- include('partials/footer') %>

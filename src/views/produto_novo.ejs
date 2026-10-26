@@ -1,0 +1,16 @@
+<%- include('partials/header', { titulo: 'Novo produto' }) %>
+<div class="card" style="max-width:520px">
+  <h2>Cadastrar produto</h2>
+  <% if (erro) { %><div class="alerta alerta-erro"><%= erro %></div><% } %>
+  <form action="/vendedor/produtos" method="post">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <label>Nome</label><input name="nome" required>
+    <label>Descrição</label><textarea name="descricao" rows="3"></textarea>
+    <div style="display:flex;gap:1rem">
+      <div style="flex:1"><label>Preço (R$)</label><input name="preco" type="number" step="0.01" required></div>
+      <div style="flex:1"><label>Estoque</label><input name="estoque" type="number" value="0"></div>
+    </div>
+    <div style="margin-top:1rem"><button type="submit">Salvar</button></div>
+  </form>
+</div>
+<%- include('partials/footer') %>

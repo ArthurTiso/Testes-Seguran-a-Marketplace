@@ -1,0 +1,12 @@
+<%- include('partials/header', { titulo: 'Minha conta' }) %>
+<h2>Minha conta</h2>
+<div class="card">
+  <p><strong>Nome:</strong> <%- escapeHtml(u.nome) %></p>
+  <p><strong>E-mail:</strong> <%- escapeHtml(u.email) %></p>
+  <p><strong>Papel:</strong> <%= u.papel %></p>
+  <p><strong>CPF:</strong> <%= sens.cpfMascarado %>
+     <span class="small">(armazenado cifrado; exibido mascarado)</span></p>
+  <p><strong>Telefone:</strong> <%- escapeHtml(sens.telefone || '—') %></p>
+  <p class="small">Membro desde <%= new Date(u.criado_em).toLocaleDateString('pt-BR') %></p>
+</div>
+<%- include('partials/footer') %>

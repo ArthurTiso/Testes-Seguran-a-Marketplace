@@ -1,0 +1,25 @@
+<%- include('partials/header', { titulo: 'Cadastro' }) %>
+<div class="card" style="max-width:520px;margin:1.5rem auto">
+  <h2>Criar conta</h2>
+  <% if (erros && erros.length) { %>
+    <div class="alerta alerta-erro"><ul style="margin:.2rem 0 .2rem 1rem">
+      <% erros.forEach(e => { %><li><%= e %></li><% }) %>
+    </ul></div>
+  <% } %>
+  <form action="/cadastro" method="post">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <label>Nome completo</label>
+    <input name="nome" value="<%= valores.nome || '' %>" required>
+    <label>E-mail</label>
+    <input type="email" name="email" value="<%= valores.email || '' %>" required>
+    <label>CPF</label>
+    <input name="cpf" placeholder="000.000.000-00" value="<%= valores.cpf || '' %>" required>
+    <label>Telefone</label>
+    <input name="telefone" placeholder="(12) 99999-9999" value="<%= valores.telefone || '' %>">
+    <label>Senha</label>
+    <input type="password" name="senha" required>
+    <p class="small">Mínimo 8 caracteres, com letra maiúscula, número e símbolo.</p>
+    <div style="margin-top:1rem"><button type="submit">Cadastrar</button></div>
+  </form>
+</div>
+<%- include('partials/footer') %>

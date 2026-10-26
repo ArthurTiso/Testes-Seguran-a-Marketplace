@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= typeof titulo !== 'undefined' ? titulo : 'Marketplace IFSP' %></title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+<% const flags = Object.entries(vuln).filter(([k,v]) => v && k!=='enabled').map(([k])=>k); %>
+<% if (vuln.enabled || flags.length) { %>
+  <div class="banner-vuln">⚠ MODO VULNERÁVEL ATIVO — apenas para testes autorizados — flags: <%= flags.length ? flags.join(', ') : 'banner' %></div>
+<% } %>
+<header class="topo">
+  <a class="marca" href="/">🛒 Marketplace IFSP</a>
+  <nav>
+    <a href="/">Produtos</a>
+    <a href="/carrinho">Carrinho</a>
+    <% if (usuario) { %>
+      <a href="/pedidos">Meus pedidos</a>
+      <a href="/conta">Minha conta</a>
+      <% if (usuario.papel === 'vendedor' || usuario.papel === 'admin') { %>
+        <a href="/vendedor/produtos/novo">+ Produto</a>
+      <% } %>
+      <% if (usuario.papel === 'admin') { %><a href="/admin">Admin</a><% } %>
+      <span>| Olá, <%= usuario.nome %></span>
+      <form action="/logout" method="post" style="display:inline">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <button class="btn-sec" style="padding:.3rem .7rem">Sair</button>
+      </form>
+    <% } else { %>
+      <a href="/login">Entrar</a>
+      <a href="/cadastro">Cadastrar</a>
+    <% } %>
+  </nav>
+</header>
+<div class="container">

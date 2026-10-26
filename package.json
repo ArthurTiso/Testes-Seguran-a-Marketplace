@@ -1,0 +1,30 @@
+{
+  "name": "marketplace-seguranca",
+  "version": "1.0.0",
+  "description": "Marketplace didático para a disciplina de Segurança de Sistemas (IFSP). Implementa boas práticas OWASP e um modo vulnerável isolável para testes de invasão autorizados.",
+  "main": "src/server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "db:init": "node scripts/init-db.js",
+    "db:seed": "node scripts/seed.js",
+    "db:reset": "node scripts/init-db.js && node scripts/seed.js",
+    "gen:key": "node scripts/gen-keys.js"
+  },
+  "author": "Aluno IFSP - Segurança de Sistemas",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.4.1",
+    "express-session": "^1.18.1",
+    "express-validator": "^7.2.0",
+    "helmet": "^8.0.0",
+    "morgan": "^1.10.0",
+    "mysql2": "^3.11.5"
+  }
+}

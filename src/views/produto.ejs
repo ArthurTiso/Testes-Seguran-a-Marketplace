@@ -1,0 +1,39 @@
+<%- include('partials/header', { titulo: produto.nome }) %>
+<div class="card">
+  <h2><%- escapeHtml(produto.nome) %></h2>
+  <p><%- escapeHtml(produto.descricao || '') %></p>
+  <p class="preco" style="color:#2e7d32;font-weight:700;font-size:1.3rem">R$ <%= Number(produto.preco).toFixed(2) %></p>
+  <p class="small">Vendedor: <%- escapeHtml(produto.vendedor) %> · Estoque: <%= produto.estoque %></p>
+  <form action="/carrinho/adicionar" method="post" style="display:flex;gap:.5rem;max-width:320px">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <input type="hidden" name="produtoId" value="<%= produto.id %>">
+    <input type="number" name="quantidade" value="1" min="1" style="width:80px">
+    <button type="submit">Adicionar ao carrinho</button>
+  </form>
+</div>
+
+<div class="card">
+  <h3>Avaliações</h3>
+  <% if (!avaliacoes.length) { %><p class="small">Ainda não há avaliações.</p><% } %>
+  <% avaliacoes.forEach(a => { %>
+    <div style="border-bottom:1px solid #eee;padding:.4rem 0">
+      <strong><%- escapeHtml(a.autor) %></strong> — nota <%= a.nota %>/5
+      <div><%- escapeHtml(a.comentario || '') %></div>
+    </div>
+  <% }) %>
+
+  <% if (usuario) { %>
+    <h4 style="margin-top:1rem">Deixe sua avaliação</h4>
+    <form action="/produto/<%= produto.id %>/avaliar" method="post">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <label>Nota</label>
+      <select name="nota"><% for(let i=5;i>=1;i--){ %><option value="<%= i %>"><%= i %></option><% } %></select>
+      <label>Comentário</label>
+      <textarea name="comentario" rows="3"></textarea>
+      <div style="margin-top:.6rem"><button type="submit">Enviar avaliação</button></div>
+    </form>
+  <% } else { %>
+    <p class="small"><a href="/login">Entre</a> para avaliar.</p>
+  <% } %>
+</div>
+<%- include('partials/footer') %>
