@@ -1,0 +1,26 @@
+# Serviço que adiciona usuários fake periodicamente (demonstração).
+# Vinculado ao marketplace: liga junto e PARA junto com ele (BindsTo).
+#
+# Instalar:
+#   sudo cp deploy/popular-usuarios.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now popular-usuarios
+# Parar / desligar:
+#   sudo systemctl disable --now popular-usuarios
+
+[Unit]
+Description=Povoamento periódico de usuários (demo Marketplace)
+After=marketplace.service
+Requires=marketplace.service
+BindsTo=marketplace.service
+
+[Service]
+Type=simple
+User=marketplace
+WorkingDirectory=/opt/marketplace
+ExecStart=/usr/bin/env bash scripts/popular-continuo.sh
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
