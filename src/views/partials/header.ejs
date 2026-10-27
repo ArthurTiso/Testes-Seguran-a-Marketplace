@@ -22,7 +22,7 @@
       <% if (usuario.papel === 'vendedor' || usuario.papel === 'admin') { %>
         <a href="/vendedor/produtos/novo">+ Produto</a>
       <% } %>
-      <% if (usuario.papel === 'admin') { %><a href="/admin">Admin</a><% } %>
+      <% if (usuario.papel === 'admin') { %><a href="/admin">Admin</a><a href="/admin/banco">Banco de Dados</a><% } %>
       <span>| Olá, <%= usuario.nome %></span>
       <form action="/logout" method="post" style="display:inline">
         <input type="hidden" name="_csrf" value="<%= csrfToken %>">

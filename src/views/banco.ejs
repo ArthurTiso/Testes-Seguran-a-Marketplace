@@ -1,0 +1,62 @@
+<%- include('partials/header', { titulo: 'Banco de Dados' }) %>
+<h2>Banco de Dados <span class="small">(somente leitura)</span></h2>
+<p class="small">Visualização direta das tabelas do MySQL — útil para conferência
+na avaliação sem precisar do Workbench. Observe que <strong>senhas estão em
+bcrypt</strong> e <strong>CPF/cartão estão cifrados</strong>.</p>
+
+<div style="display:flex;gap:1rem;flex-wrap:wrap">
+  <!-- Menu de tabelas -->
+  <div class="card" style="min-width:200px">
+    <h3 style="margin-top:0">Tabelas</h3>
+    <% TABELAS.forEach(t => { %>
+      <div style="margin:.2rem 0">
+        <a href="/admin/banco?t=<%= t %>"
+           style="<%= t === tabela ? 'font-weight:700' : '' %>">
+          <%= t %></a>
+        <span class="badge"><%= contagens[t] %></span>
+      </div>
+    <% }) %>
+  </div>
+
+  <!-- Conteúdo da tabela -->
+  <div class="card" style="flex:1;overflow:auto">
+    <h3 style="margin-top:0">
+      <code><%= tabela %></code>
+      <span class="small">(mostrando até 200 registros)</span>
+    </h3>
+    <% if (!linhas.length) { %>
+      <p class="small">Tabela vazia.</p>
+    <% } else { %>
+      <div style="overflow:auto;max-width:100%">
+        <table>
+          <thead>
+            <tr><% colunas.forEach(c => { %><th><%= c %></th><% }) %></tr>
+          </thead>
+          <tbody>
+            <% linhas.forEach(row => { %>
+              <tr>
+                <% colunas.forEach(c => { var v = row[c]; %>
+                  <td style="max-width:280px;word-break:break-all;font-size:.82rem">
+                    <% if (v === null || v === undefined) { %>
+                      <span class="small">NULL</span>
+                    <% } else if (v instanceof Date) { %>
+                      <%= v.toLocaleString('pt-BR') %>
+                    <% } else { %>
+                      <%= String(v) %>
+                    <% } %>
+                  </td>
+                <% }) %>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    <% } %>
+  </div>
+</div>
+
+<p class="small" style="margin-top:1rem">
+  Acesso restrito ao administrador e somente leitura. O nome da tabela é
+  validado por lista fixa (sem SQL Injection).
+</p>
+<%- include('partials/footer') %>
