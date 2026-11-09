@@ -1,9 +1,15 @@
 <%- include('partials/header', { titulo: 'Produtos' }) %>
-<h2>Produtos</h2>
-<form action="/" method="get" style="display:flex;gap:.5rem;max-width:480px;margin-bottom:1rem">
-  <input name="q" placeholder="Buscar produto..." value="<%= busca %>">
-  <button type="submit">Buscar</button>
-</form>
+<section class="hero">
+  <h1>🛒 Marketplace IFSP</h1>
+  <p>Tecnologia com segurança — compre com praticidade e entrega rápida.</p>
+</section>
+<div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1rem">
+  <h2 style="margin:0">Produtos</h2>
+  <form action="/" method="get" style="display:flex;gap:.5rem;flex:1;max-width:420px">
+    <input name="q" placeholder="🔎 Buscar produto..." value="<%= busca %>">
+    <button type="submit">Buscar</button>
+  </form>
+</div>
 
 <% if (typeof debugSql !== 'undefined' && debugSql) { %>
   <div class="mono">SQL executado (modo vulnerável): <%= debugSql %></div>
