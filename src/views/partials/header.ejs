@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title><%= typeof titulo !== 'undefined' ? titulo : 'Marketplace IFSP' %></title>
+  <% if (typeof refresh !== 'undefined' && refresh) { %><meta http-equiv="refresh" content="<%= refresh %>"><% } %>
   <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>

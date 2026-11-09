@@ -1,8 +1,9 @@
-<%- include('partials/header', { titulo: 'Banco de Dados' }) %>
-<h2>Banco de Dados <span class="small">(somente leitura)</span></h2>
+<%- include('partials/header', { titulo: 'Banco de Dados', refresh: 15 }) %>
+<h2>Banco de Dados <span class="small">(somente leitura · atualiza sozinho a cada 15s)</span></h2>
 <p class="small">Visualização direta das tabelas do MySQL — útil para conferência
 na avaliação sem precisar do Workbench. Observe que <strong>senhas estão em
-bcrypt</strong> e <strong>CPF/cartão estão cifrados</strong>.</p>
+bcrypt</strong> e <strong>CPF/cartão estão cifrados</strong>. A página se
+atualiza automaticamente, então os novos usuários e compras aparecem em tempo real.</p>
 
 <div style="display:flex;gap:1rem;flex-wrap:wrap">
   <!-- Menu de tabelas -->

@@ -15,10 +15,11 @@ set -u
 cd "$(dirname "$0")/.." || exit 1
 INTERVALO="${INTERVALO:-300}"   # 5 minutos
 
-echo "Iniciando povoamento a cada ${INTERVALO}s (apenas enquanto o marketplace estiver ativo)."
+echo "Iniciando povoamento (usuários + compras) a cada ${INTERVALO}s (apenas enquanto o marketplace estiver ativo)."
 while true; do
   if systemctl is-active --quiet marketplace 2>/dev/null; then
     node scripts/gerar-usuarios.js
+    node scripts/gerar-compras.js
   else
     echo "[$(date '+%H:%M:%S')] marketplace parado — aguardando..."
   fi
