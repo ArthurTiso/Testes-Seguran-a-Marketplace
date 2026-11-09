@@ -1,15 +1,23 @@
 <%- include('partials/header', { titulo: produto.nome }) %>
+<p class="small" style="margin:.2rem 0 .8rem"><a href="/">← Voltar aos produtos</a></p>
 <div class="card">
-  <h2><%- escapeHtml(produto.nome) %></h2>
-  <p><%- escapeHtml(produto.descricao || '') %></p>
-  <p class="preco" style="color:#2e7d32;font-weight:700;font-size:1.3rem">R$ <%= Number(produto.preco).toFixed(2) %></p>
-  <p class="small">Vendedor: <%- escapeHtml(produto.vendedor) %> · Estoque: <%= produto.estoque %></p>
-  <form action="/carrinho/adicionar" method="post" style="display:flex;gap:.5rem;max-width:320px">
-    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-    <input type="hidden" name="produtoId" value="<%= produto.id %>">
-    <input type="number" name="quantidade" value="1" min="1" style="width:80px">
-    <button type="submit">Adicionar ao carrinho</button>
-  </form>
+  <div class="produto-detalhe">
+    <div class="produto-foto"><%- include('partials/thumb', { nome: produto.nome }) %></div>
+    <div>
+      <h2 style="margin-top:0"><%- escapeHtml(produto.nome) %></h2>
+      <div class="stars" style="margin-bottom:.4rem">★★★★<span class="dim">★</span> <span>(<%= 20 + (produto.id * 37) % 480 %> avaliações)</span></div>
+      <p><%- escapeHtml(produto.descricao || '') %></p>
+      <p class="price-lg" style="margin:.4rem 0">R$ <%= Number(produto.preco).toFixed(2).replace('.', ',') %></p>
+      <% if (Number(produto.preco) >= 100) { %><p class="tag-frete">✓ Frete grátis para todo o Brasil</p><% } %>
+      <p class="prod-estoque">Vendido por <%- escapeHtml(produto.vendedor) %> · <%= produto.estoque %> em estoque</p>
+      <form action="/carrinho/adicionar" method="post" style="display:flex;gap:.5rem;max-width:340px;margin-top:.6rem">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <input type="hidden" name="produtoId" value="<%= produto.id %>">
+        <input type="number" name="quantidade" value="1" min="1" style="width:84px">
+        <button type="submit" style="flex:1">Adicionar ao carrinho</button>
+      </form>
+    </div>
+  </div>
 </div>
 
 <div class="card">

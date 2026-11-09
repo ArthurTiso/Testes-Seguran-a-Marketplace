@@ -1,14 +1,16 @@
-<%- include('partials/header', { titulo: 'Produtos' }) %>
-<section class="hero">
-  <h1>🛒 Marketplace IFSP</h1>
-  <p>Tecnologia com segurança — compre com praticidade e entrega rápida.</p>
+<%- include('partials/header', { titulo: 'Produtos', busca: busca }) %>
+
+<section class="promo">
+  <div>
+    <h1>Ofertas em Tecnologia 🚀</h1>
+    <p>Frete grátis em milhares de produtos · Compra segura · Entrega rápida</p>
+  </div>
+  <span class="selo">★ Loja oficial IFSP</span>
 </section>
-<div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1rem">
-  <h2 style="margin:0">Produtos</h2>
-  <form action="/" method="get" style="display:flex;gap:.5rem;flex:1;max-width:420px">
-    <input name="q" placeholder="🔎 Buscar produto..." value="<%= busca %>">
-    <button type="submit">Buscar</button>
-  </form>
+
+<div style="display:flex;align-items:baseline;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:.8rem">
+  <h2 style="margin:0"><%= busca ? 'Resultados para "' + busca + '"' : 'Produtos em destaque' %></h2>
+  <span class="small"><%= produtos.length %> produto(s)</span>
 </div>
 
 <% if (typeof debugSql !== 'undefined' && debugSql) { %>
@@ -16,20 +18,24 @@
 <% } %>
 
 <% if (!produtos.length) { %>
-  <p>Nenhum produto encontrado.</p>
+  <div class="card"><p>Nenhum produto encontrado.</p></div>
 <% } else { %>
-  <div class="grid">
+  <div class="market-grid">
     <% produtos.forEach(p => { %>
-      <div class="card produto">
-        <h3 style="margin:.2rem 0"><a href="/produto/<%= p.id %>"><%- escapeHtml(p.nome) %></a></h3>
-        <p class="small"><%- escapeHtml(p.descricao || '') %></p>
-        <p class="preco">R$ <%= Number(p.preco).toFixed(2) %></p>
-        <p class="small">Vendedor: <%- escapeHtml(p.vendedor || '—') %> · Estoque: <%= p.estoque %></p>
-        <form action="/carrinho/adicionar" method="post">
-          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-          <input type="hidden" name="produtoId" value="<%= p.id %>">
-          <button type="submit">Adicionar ao carrinho</button>
-        </form>
+      <div class="prod-card">
+        <a class="prod-thumb" href="/produto/<%= p.id %>"><%- include('partials/thumb', { nome: p.nome }) %></a>
+        <div class="prod-info">
+          <a class="prod-title" href="/produto/<%= p.id %>"><%- escapeHtml(p.nome) %></a>
+          <div class="stars">★★★★<span class="dim">★</span> <span>(<%= 20 + (p.id * 37) % 480 %>)</span></div>
+          <div class="price-lg">R$ <%= Number(p.preco).toFixed(2).replace('.', ',') %></div>
+          <% if (Number(p.preco) >= 100) { %><div class="tag-frete">Frete grátis</div><% } else { %><div class="tag-frete">Chega rápido</div><% } %>
+          <div class="prod-estoque"><%= p.estoque > 0 ? p.estoque + ' em estoque' : 'Indisponível' %></div>
+          <form action="/carrinho/adicionar" method="post">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <input type="hidden" name="produtoId" value="<%= p.id %>">
+            <button type="submit" class="btn-add">Adicionar ao carrinho</button>
+          </form>
+        </div>
       </div>
     <% }) %>
   </div>

@@ -158,3 +158,53 @@ footer{color:var(--muted);font-size:.82rem;text-align:center;padding:2rem 1rem}
   .hero h1{font-size:1.5rem}
   header.topo nav a{padding:.35rem .55rem;font-size:.86rem}
 }
+
+/* ==========================================================================
+   Estilo "marketplace" (lojas conhecidas) — cards com imagem
+   ========================================================================== */
+/* Busca no cabeçalho */
+.busca-topo{display:flex;flex:1;max-width:520px;margin:0 .4rem}
+.busca-topo input{border-radius:999px 0 0 999px;border:none;height:40px;background:#fff;color:#0f172a}
+.busca-topo button{border-radius:0 999px 999px 0;height:40px;padding:0 1.1rem;box-shadow:none;
+  background:#facc15;color:#1e293b}
+.busca-topo button:hover{filter:brightness(1.03)}
+
+/* Banner promocional */
+.promo{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;
+  background:linear-gradient(120deg,var(--primary),var(--accent));color:#fff;
+  border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:1.2rem;box-shadow:var(--shadow)}
+.promo h1{margin:0;font-size:1.5rem;font-weight:800}
+.promo p{margin:.15rem 0 0;opacity:.92;font-size:.95rem}
+.promo .selo{margin-left:auto;background:rgba(255,255,255,.18);padding:.5rem .9rem;border-radius:999px;font-weight:700;font-size:.85rem}
+
+/* Grade de produtos estilo loja */
+.market-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(205px,1fr));gap:1rem}
+.prod-card{
+  background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden;
+  display:flex;flex-direction:column;box-shadow:var(--shadow-sm);
+  transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+}
+.prod-card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:#c7cdfb}
+.prod-thumb{display:block;background:#fff;padding:14px;aspect-ratio:4/3;overflow:hidden}
+.prod-thumb img{width:100%;height:100%;object-fit:contain;display:block}
+.prod-info{padding:.3rem 1rem 1rem;display:flex;flex-direction:column;gap:.35rem}
+.prod-title{color:var(--text);font-weight:600;font-size:.95rem;line-height:1.3;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.5em}
+.prod-title:hover{color:var(--primary);text-decoration:none}
+.stars{color:#f59e0b;font-size:.85rem;letter-spacing:1px}
+.stars .dim{color:#cbd5e1}
+.stars span{color:var(--muted);font-size:.8rem;letter-spacing:0}
+.price-lg{font-size:1.45rem;font-weight:800;color:#0f172a;line-height:1.1}
+.price-lg small{font-size:.8rem;font-weight:600;color:var(--muted)}
+.tag-frete{color:var(--green);font-weight:700;font-size:.8rem}
+.prod-estoque{font-size:.78rem;color:var(--muted)}
+.btn-add{width:100%;margin-top:.3rem;padding:.55rem}
+
+/* Página de produto: imagem grande */
+.produto-detalhe{display:grid;grid-template-columns:minmax(0,360px) 1fr;gap:1.5rem;align-items:start}
+.produto-foto{background:#fff;border:1px solid var(--border);border-radius:14px;padding:20px;aspect-ratio:4/3}
+.produto-foto img{width:100%;height:100%;object-fit:contain}
+@media (max-width:640px){
+  .produto-detalhe{grid-template-columns:1fr}
+  .busca-topo{order:3;max-width:100%;margin:.4rem 0 0}
+}

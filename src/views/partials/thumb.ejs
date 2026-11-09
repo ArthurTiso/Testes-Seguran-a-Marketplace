@@ -1,0 +1,11 @@
+<%
+  /* Escolhe a imagem do produto pelo nome (somente front-end). */
+  var _n = (typeof nome !== 'undefined' && nome ? String(nome) : '').toLowerCase();
+  var _img = 'generico';
+  if (_n.indexOf('teclado') >= 0) _img = 'teclado';
+  else if (_n.indexOf('mouse') >= 0) _img = 'mouse';
+  else if (_n.indexOf('monitor') >= 0) _img = 'monitor';
+  else if (_n.indexOf('headset') >= 0 || _n.indexOf('fone') >= 0) _img = 'headset';
+  else if (_n.indexOf('webcam') >= 0 || _n.indexOf('camera') >= 0 || _n.indexOf('câmera') >= 0) _img = 'webcam';
+  else if (_n.indexOf('ssd') >= 0 || _n.indexOf('nvme') >= 0 || _n.indexOf('hd') >= 0) _img = 'ssd';
+%><img src="/static/img/<%= _img %>.svg" alt="<%= escapeHtml(typeof nome !== 'undefined' ? nome : 'Produto') %>" loading="lazy">

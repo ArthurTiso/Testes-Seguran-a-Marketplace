@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 240" width="320" height="240" role="img" aria-label="Webcam">
+  <defs><linearGradient id="bg5" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#eef2ff"/><stop offset="1" stop-color="#f5f3ff"/></linearGradient></defs>
+  <rect width="320" height="240" rx="18" fill="url(#bg5)"/>
+  <circle cx="160" cy="118" r="66" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+  <circle cx="160" cy="118" r="42" fill="#334155"/>
+  <circle cx="160" cy="118" r="26" fill="#6366f1"/>
+  <circle cx="150" cy="108" r="8" fill="#c7d2fe"/>
+  <rect x="120" y="186" width="80" height="14" rx="7" fill="#475569"/>
+  <circle cx="196" cy="86" r="5" fill="#22c55e"/>
+</svg>
