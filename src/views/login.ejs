@@ -12,5 +12,13 @@
     <div style="margin-top:1rem"><button type="submit">Entrar</button></div>
   </form>
   <p class="small" style="margin-top:1rem">Não tem conta? <a href="/cadastro">Cadastre-se</a></p>
+
+  <div style="border-top:1px solid var(--border);margin:1rem 0 .8rem;padding-top:.9rem">
+    <form action="/demo/admin" method="post">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <button type="submit" class="btn-sec" style="width:100%">🔑 Entrar como Administrador</button>
+    </form>
+    <p class="small" style="margin-top:.5rem;text-align:center">Acesso rápido à visão administrativa (demonstração).</p>
+  </div>
 </div>
 <%- include('partials/footer') %>

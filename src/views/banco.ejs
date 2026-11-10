@@ -1,9 +1,21 @@
 <%- include('partials/header', { titulo: 'Banco de Dados', refresh: 15 }) %>
-<h2>Banco de Dados <span class="small">(somente leitura · atualiza sozinho a cada 15s)</span></h2>
-<p class="small">Visualização direta das tabelas do MySQL — útil para conferência
-na avaliação sem precisar do Workbench. Observe que <strong>senhas estão em
-bcrypt</strong> e <strong>CPF/cartão estão cifrados</strong>. A página se
-atualiza automaticamente, então os novos usuários e compras aparecem em tempo real.</p>
+<h2>Painel do Banco de Dados <span class="small">(atualiza sozinho a cada 15s)</span></h2>
+
+<% if (typeof stats !== 'undefined') { %>
+<div class="kpis">
+  <div class="kpi"><div class="kpi-num"><%= stats.usuarios %></div><div class="kpi-lbl">Usuários cadastrados</div></div>
+  <div class="kpi"><div class="kpi-num"><%= stats.produtos %></div><div class="kpi-lbl">Produtos</div></div>
+  <div class="kpi"><div class="kpi-num"><%= stats.pedidos %></div><div class="kpi-lbl">Pedidos realizados</div></div>
+  <div class="kpi"><div class="kpi-num">R$ <%= stats.vendas.toFixed(2).replace('.', ',') %></div><div class="kpi-lbl">Total em vendas</div></div>
+  <div class="kpi"><div class="kpi-num"><%= stats.avaliacoes %></div><div class="kpi-lbl">Avaliações</div></div>
+  <div class="kpi"><div class="kpi-num"><%= stats.admins %></div><div class="kpi-lbl">Administradores</div></div>
+</div>
+<% } %>
+
+<p class="small">Resumo em tempo real do sistema. Abaixo, o detalhe das tabelas do MySQL
+(somente leitura) — note que <strong>senhas estão em bcrypt</strong> e
+<strong>CPF/cartão estão cifrados</strong>.</p>
+<h3 style="margin:.6rem 0 .4rem">Detalhe das tabelas</h3>
 
 <div style="display:flex;gap:1rem;flex-wrap:wrap">
   <!-- Menu de tabelas -->

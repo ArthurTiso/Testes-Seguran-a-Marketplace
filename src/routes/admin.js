@@ -51,7 +51,19 @@ router.get('/admin/banco', requireRole('admin'), async (req, res, next) => {
     const linhas = await query(`SELECT * FROM \`${tabela}\` ORDER BY 1 DESC LIMIT 200`);
     const colunas = linhas.length ? Object.keys(linhas[0]) : [];
 
-    res.render('banco', { TABELAS, tabela, contagens, colunas, linhas });
+    // Resumo (KPIs) — números finais e importantes do sistema.
+    const [vendas] = await query('SELECT COALESCE(SUM(total),0) AS s FROM pedidos');
+    const [admins] = await query("SELECT COUNT(*) AS n FROM usuarios WHERE papel = 'admin'");
+    const stats = {
+      usuarios: contagens.usuarios,
+      produtos: contagens.produtos,
+      pedidos: contagens.pedidos,
+      avaliacoes: contagens.avaliacoes,
+      vendas: Number(vendas.s),
+      admins: admins.n,
+    };
+
+    res.render('banco', { TABELAS, tabela, contagens, colunas, linhas, stats });
   } catch (e) { next(e); }
 });
 

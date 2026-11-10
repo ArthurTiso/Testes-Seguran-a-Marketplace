@@ -4,6 +4,7 @@ const express = require('express');
 const router = express.Router();
 const config = require('../config');
 const userService = require('../services/userService');
+const { query } = require('../db/pool');
 const { registrarAuditoria } = require('../middleware/audit');
 const { loginLimiter } = require('../middleware/security');
 const { loginSqlInjectable } = require('../vuln/sqli');
@@ -70,6 +71,27 @@ router.post('/login', loginLimiter, async (req, res, next) => {
       req.session.papel = r.usuario.papel;
       registrarAuditoria(req, 'LOGIN_OK', `email=${email}`, r.usuario.id);
       res.redirect(destino);
+    });
+  } catch (e) { next(e); }
+});
+
+// ---------- Login rápido de administrador (atalho de demonstração) ----------
+// Entra direto como o primeiro admin ativo e vai para a visão administrativa.
+// Conveniência para a avaliação; registra o acesso na auditoria.
+router.post('/demo/admin', async (req, res, next) => {
+  try {
+    const rows = await query(
+      "SELECT * FROM usuarios WHERE papel = 'admin' AND ativo = 1 ORDER BY id LIMIT 1"
+    );
+    const u = rows[0];
+    if (!u) return res.redirect('/login');
+    req.session.regenerate((err) => {
+      if (err) return next(err);
+      req.session.userId = u.id;
+      req.session.nome = u.nome;
+      req.session.papel = u.papel;
+      registrarAuditoria(req, 'LOGIN_DEMO_ADMIN', `email=${u.email}`, u.id);
+      res.redirect('/admin');
     });
   } catch (e) { next(e); }
 });
