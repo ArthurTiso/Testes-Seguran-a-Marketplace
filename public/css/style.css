@@ -217,3 +217,12 @@ footer{color:var(--muted);font-size:.82rem;text-align:center;padding:2rem 1rem}
   background:linear-gradient(180deg,var(--primary),var(--accent))}
 .kpi-num{font-size:1.7rem;font-weight:800;color:#0f172a;line-height:1.1;letter-spacing:-.02em}
 .kpi-lbl{color:var(--muted);font-size:.85rem;font-weight:600;margin-top:.2rem}
+
+/* ---------- Modal (detalhe das tabelas) ---------- */
+.modal{display:none;position:fixed;inset:0;z-index:100}
+.modal.aberto{display:block}
+.modal-bg{position:absolute;inset:0;background:rgba(15,23,42,.55);backdrop-filter:blur(2px)}
+.modal-box{position:relative;background:#fff;width:min(1040px,94vw);margin:3vh auto;
+  max-height:94vh;overflow:auto;border-radius:16px;box-shadow:0 30px 70px -20px rgba(15,23,42,.5);padding:1.2rem 1.3rem}
+.modal-head{display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  position:sticky;top:-1.2rem;background:#fff;padding:.4rem 0 .7rem;margin:-.2rem 0 .6rem;border-bottom:1px solid var(--border)}
