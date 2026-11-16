@@ -19,6 +19,7 @@ echo "Iniciando povoamento (usuários + compras) a cada ${INTERVALO}s (apenas en
 while true; do
   if systemctl is-active --quiet marketplace 2>/dev/null; then
     node scripts/gerar-usuarios.js
+    node scripts/gerar-produtos.js
     node scripts/gerar-compras.js
   else
     echo "[$(date '+%H:%M:%S')] marketplace parado — aguardando..."
